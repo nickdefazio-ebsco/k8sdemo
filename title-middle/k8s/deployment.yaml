@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: title-middle
+  labels:
+    app: title-middle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: title-middle
+  template:
+    metadata:
+      labels:
+        app: title-middle
+    spec:
+      containers:
+      - name: title-middle
+        image: title-middle:1.0.0
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: IfNotPresent #For local dev
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5

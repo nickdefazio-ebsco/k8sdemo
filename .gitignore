@@ -1,0 +1,13 @@
+sample/
+.DS_Store
+/.gradle/
+/build/
+bin/
+logs/
+.gradle
+/build/
+
+.idea
+*.iws
+*.iml
+*.ipr
