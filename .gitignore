@@ -1,7 +1,7 @@
 sample/
 .DS_Store
 /.gradle/
-/build/
+*/build/
 bin/
 logs/
 .gradle
