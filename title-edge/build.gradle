@@ -19,7 +19,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 bootJar {
-    baseName = 'title-middle'
+    baseName = 'title-edge'
     version =  '0.1.0'
 }
 

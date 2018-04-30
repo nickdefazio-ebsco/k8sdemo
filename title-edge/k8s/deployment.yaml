@@ -1,22 +1,22 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: title-middle
+  name: title-edge
   labels:
-    app: title-middle
+    app: title-edge
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: title-middle
+      app: title-edge
   template:
     metadata:
       labels:
-        app: title-middle
+        app: title-edge
     spec:
       containers:
-      - name: title-middle
-        image: title-middle:0.1.0
+      - name: title-edge
+        image: title-edge:0.1.0
         ports:
         - containerPort: 8080
         imagePullPolicy: IfNotPresent #For local dev, use local docker repo

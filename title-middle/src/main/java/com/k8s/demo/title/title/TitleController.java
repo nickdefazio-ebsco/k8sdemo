@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +26,11 @@ public class TitleController {
         this.titles.put("3", new Title("3", "Title 3"));
         this.titles.put("4", new Title("4", "Title 4"));
         this.titles.put("5", new Title("5", "Title 5"));
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Title>> getAllTitles(){
+        return new ResponseEntity<List<Title>>(new ArrayList<>(this.titles.values()), HttpStatus.OK);
     }
 
 
