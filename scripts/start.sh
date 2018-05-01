@@ -1,6 +1,6 @@
 echo 'Creating title-middle deployment...'
-kubectl create -f title-middle/k8s/deployment.yaml
+kubectl apply -f title-middle/k8s/deployment.yaml --namespace=rma
 echo 'Creating title-edge deployment...'
-kubectl create -f title-edge/k8s/deployment.yaml
+kubectl apply -f title-edge/k8s/deployment.yaml --namespace=rma
 echo 'Creating title-middle service...'
-kubectl create -f title-middle/k8s/service.yaml
+kubectl apply -f title-middle/k8s/service.yaml --namespace=rma

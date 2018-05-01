@@ -17,3 +17,9 @@ echo 'Installing webhook'
 kubectl apply -f istio/istio-0.7.1/install/kubernetes/istio-sidecar-injector-with-ca-bundle.yaml
 
 export PATH=$PWD/istio/istio-0.7.1/bin:$PATH
+
+kubectl create -f scripts/namespace_dh.yaml
+kubectl create -f scripts/namespace_rma.yaml
+
+kubectl label namespace dh istio-injection=enabled
+kubectl label namespace rma istio-injection=enabled
