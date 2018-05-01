@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: search-edge
+  labels:
+    app: search-edge
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: search-edge
+  template:
+    metadata:
+      labels:
+        app: search-edge
+    spec:
+      containers:
+      - name: search-edge
+        image: search-edge:0.1.0
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: IfNotPresent #For local dev, use local docker repo
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
