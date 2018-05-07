@@ -29,4 +29,7 @@ kubectl apply -f title-middle/k8s/service.yaml --namespace=rma
 echo 'Creating search-edge deployment...'
 kubectl apply -f search-edge/k8s/deployment.yaml --namespace=dh
 
+echo 'Applying route rule for title-middle...'
+kubectl apply -f title-middle/k8s/route/title-middle-90-10.yaml --namespace=rma
+
 echo 'k8s deployment complete'

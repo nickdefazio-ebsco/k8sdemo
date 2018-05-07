@@ -5,7 +5,7 @@ metadata:
 spec:
   destination:
     name: title-middle
-  precedence: 4
+  precedence: 1
   route:
   - labels:
       version: v1
