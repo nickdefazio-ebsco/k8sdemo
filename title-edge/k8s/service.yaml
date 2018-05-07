@@ -4,13 +4,12 @@ metadata:
   name: title-edge
   labels:
     app: title-edge
-    #role: ??
 spec:
   type: NodePort
   ports:
   - port: 8080
     targetPort: 8080
     name: http
+    protocol: TCP
   selector:
     app: title-edge
-    #role: ??

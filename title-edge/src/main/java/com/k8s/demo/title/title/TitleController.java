@@ -13,16 +13,15 @@ import java.io.IOException;
 
 
 @RestController
-@RequestMapping("title")
+@RequestMapping("/title-edge")
 public class TitleController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, path = "/title")
     public void search(@RequestParam("title") final String title){
         final HttpClient client = HttpClients.createDefault();
         final HttpGet get = new HttpGet("http://title-middle:8080/title");
 
         try{
-            //Parse response, introduce istio?
             final HttpResponse response = client.execute(get);
             System.out.println(response.getStatusLine());
             System.out.println(response.getEntity());

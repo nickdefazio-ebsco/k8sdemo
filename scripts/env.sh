@@ -18,6 +18,8 @@ kubectl apply -f istio/istio-0.7.1/install/kubernetes/istio-sidecar-injector-wit
 
 export PATH=$PWD/istio/istio-0.7.1/bin:$PATH
 
+minikube addons enable ingress
+
 kubectl create -f scripts/k8s/namespace_dh.yaml
 kubectl create -f scripts/k8s/namespace_rma.yaml
 

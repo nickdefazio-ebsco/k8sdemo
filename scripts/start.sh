@@ -37,4 +37,7 @@ kubectl apply -f search-edge/k8s/service.yaml --namespace=dh
 echo 'Applying route rule for title-middle...'
 kubectl apply -f title-middle/k8s/route/title-middle-90-10.yaml --namespace=rma
 
+echo 'Applying ingress rule for rma->title-edge...'
+kubectl create -f scripts/k8s/ingress_rma.yaml 
+
 echo 'k8s deployment complete'
