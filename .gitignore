@@ -6,6 +6,8 @@ bin/
 logs/
 .gradle
 /build/
+title-middle/v1/build/
+title-middle/v2/build/
 
 .idea
 *.iws
