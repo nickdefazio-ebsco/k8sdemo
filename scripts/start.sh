@@ -18,7 +18,7 @@ docker build search-edge/ --tag search-edge:0.1.0
 
 echo 'Building and tagging complete. Creating k8s deployment and services...'
 
-## Had to add sleeps into the deploy script due to resource issues on my laptop. TODO: Find a better means of deployment
+##TODO: Sleeps needed for consistent deployment. Would like to find a way around this.
 echo 'Creating title-middle v1 deployment...'
 kubectl apply -f title-middle/k8s/deployment-v1.yaml --namespace=rma
 sleep 30
@@ -43,6 +43,7 @@ kubectl apply -f title-middle/k8s/route/title-middle-50-50.yaml --namespace=rma
 
 echo 'Applying ingress rule for rma->title-edge...'
 kubectl create -f scripts/k8s/ingress_rma.yaml
+ehco 'Applying ingress rule for dh->search-edge...'
 kubectl create -f scripts/k8s/ingress_dh.yaml
 
 echo 'k8s deployment complete'
