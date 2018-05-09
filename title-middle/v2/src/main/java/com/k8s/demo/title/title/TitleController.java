@@ -21,11 +21,16 @@ public class TitleController {
 
     public TitleController() {
         this.titles = new HashMap<>();
-        this.titles.put("1", new Title("6", "Title 6", "Book"));
-        this.titles.put("2", new Title("7", "Title 7", "Book"));
-        this.titles.put("3", new Title("8", "Title 8", "Book"));
-        this.titles.put("4", new Title("9", "Title 9", "Book"));
-        this.titles.put("5", new Title("10", "Title 10", "Book"));
+        this.titles.put("1", new Title("1", "Title 1", "Article"));
+        this.titles.put("2", new Title("2", "Title 2", "Article"));
+        this.titles.put("3", new Title("3", "Title 3", "Book"));
+        this.titles.put("4", new Title("4", "Title 4", "Book"));
+        this.titles.put("5", new Title("5", "Title 5", "Book"));
+        this.titles.put("6", new Title("6", "Title 6", "Book"));
+        this.titles.put("7", new Title("7", "Title 7", "Book"));
+        this.titles.put("8", new Title("8", "Title 8", "Article"));
+        this.titles.put("9", new Title("9", "Title 9", "Book"));
+        this.titles.put("10", new Title("10", "Title 10", "Article"));
     }
 
     @RequestMapping(method = RequestMethod.GET)

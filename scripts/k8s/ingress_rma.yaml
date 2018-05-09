@@ -9,7 +9,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /title
+      - path: /title-edge/.*
         backend:
           serviceName: title-edge
           servicePort: 8080

@@ -9,7 +9,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /search-edge/*
+      - path: /search-edge/.*
         backend:
           serviceName: search-edge
           servicePort: 8080

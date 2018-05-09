@@ -1,8 +1,6 @@
 echo 'Starting Minikube...'
 minikube start --extra-config=controller-manager.ClusterSigningCertFile="/var/lib/localkube/certs/ca.crt" --extra-config=controller-manager.ClusterSigningKeyFile="/var/lib/localkube/certs/ca.key" --extra-config=apiserver.Admission.PluginNames=NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota --kubernetes-version=v1.9.0
 
-##eval $(minikube docker-env)
-
 echo 'Installing base istio...'
 kubectl apply -f istio/istio-0.7.1/install/kubernetes/istio.yaml
 
@@ -17,6 +15,8 @@ echo 'Installing webhook'
 kubectl apply -f istio/istio-0.7.1/install/kubernetes/istio-sidecar-injector-with-ca-bundle.yaml
 
 export PATH=$PWD/istio/istio-0.7.1/bin:$PATH
+
+eval $(minikube docker-env)
 
 minikube addons enable ingress
 

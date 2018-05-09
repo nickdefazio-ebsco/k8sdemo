@@ -6,5 +6,6 @@ kubectl delete deployments/title-middle-v2 --namespace=rma
 kubectl delete deployments/title-edge --namespace=rma
 kubectl delete deployments/search-edge --namespace=dh
 
-kubectl delete routerules title-middle-90-10 --namespace=rma
+kubectl delete routerules title-middle-50-50 --namespace=rma
 kubectl delete ingress rma-ingress --namespace=rma
+kubectl delete ingress dh-ingress --namespace=dh

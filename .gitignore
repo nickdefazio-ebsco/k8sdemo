@@ -13,3 +13,6 @@ title-middle/v2/build/
 *.iws
 *.iml
 *.ipr
+*.classpath
+*.project
+*.settings
