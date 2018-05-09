@@ -23,7 +23,19 @@ Each application is implemented as a Spring Boot web app.
 ### Application overview
 * title-middle - REST service for retrieving and managing publication titles
 * title-edge - REST service for interacting with title-middle and applying any relevant business logic
-* search-edge - REST service that searches for medical articles 
+* search-edge - REST service that searches for medical articles
+ 
+### Current Istio policies
+#### title-middle 50/50
+Title-middle has two versions (v1 and v2). Istio splits traffic evenly between the two.
+
+#### title-edge ingress
+The istio ingress controller is set to route /title-edge/* traffic to title-edge
+
+#### search-edge ingress
+The istio ingress controller is set to route /search-edge/* traffic to search-edge
+
+#### TODO: Circuit breaker
 
 ## Setup instructions
 
@@ -48,8 +60,7 @@ This script will
 * Build all applications as a fat jar, and create docker images for each of them
 * Create k8s deployments for each application, spread across the two listed namespaces
 * Create k8s services for each application
-* Create a 50/50 istio route rule for title-middle v1 and v2
-* Create basic istio ingress rules for title-edge and search-edge
+* Apply istio route and ingress rules
 
 ### run `scripts/get_ingress_controller.sh`
 This script will
