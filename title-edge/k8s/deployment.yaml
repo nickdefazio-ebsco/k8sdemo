@@ -4,6 +4,7 @@ metadata:
   name: title-edge
   labels:
     app: title-edge
+    version: 0.1.0
 spec:
   replicas: 1
   selector:

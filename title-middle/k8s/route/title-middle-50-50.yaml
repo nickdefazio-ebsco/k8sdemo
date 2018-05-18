@@ -5,11 +5,12 @@ metadata:
 spec:
   destination:
     name: title-middle
-  precedence: 1
+    namespace: rma
+  precedence: 2
   route:
   - labels:
-      version: v1
+      version: 0.1.0
     weight: 50
   - labels:
-      version: v2
+      version: 0.2.0
     weight: 50

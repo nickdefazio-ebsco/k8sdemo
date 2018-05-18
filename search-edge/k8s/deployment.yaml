@@ -4,6 +4,7 @@ metadata:
   name: search-edge
   labels:
     app: search-edge
+    version: 0.1.0
 spec:
   replicas: 1
   selector:
