@@ -1,13 +1,16 @@
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: title-middle-in
-  namespace: rma
+  name: title-middle-route
 spec:
   destination:
     name: title-middle
     namespace: rma
   precedence: 1
-  match:
-    source:
-      name: title-edge
+  route:
+  - labels:
+      version: 0.1.0
+    weight: 50
+  - labels:
+      version: 0.2.0
+    weight: 50

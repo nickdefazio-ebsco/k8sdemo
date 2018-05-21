@@ -27,7 +27,7 @@ public class TitleController {
     @RequestMapping(method = RequestMethod.GET, path = "/title")
     public ResponseEntity<List<Title>> search(@RequestParam("title") final String title){
         final HttpClient client = HttpClients.createDefault();
-        final HttpGet get = new HttpGet("http://title-middle:8080/title");
+        final HttpGet get = new HttpGet("http://title-middle.rma:8080/title");
 
         try{
             final HttpResponse response = client.execute(get);

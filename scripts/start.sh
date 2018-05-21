@@ -39,11 +39,19 @@ echo 'Creating search-edge service...'
 kubectl apply -f search-edge/k8s/service.yaml --namespace=dh
 
 echo 'Applying route rule for title-middle...'
-kubectl apply -f title-middle/k8s/route/title-middle-50-50.yaml --namespace=rma
+kubectl create -f title-middle/k8s/route/title-middle-route.yaml --namespace=rma
+
+echo 'Applying circuit breaker for title-middle...'
+kubectl create -f title-middle/k8s/route/title-middle-v1-cb.yaml --namespace=rma
+kubectl create -f title-middle/k8s/route/title-middle-v2-cb.yaml --namespace=rma
 
 echo 'Applying ingress rule for rma->title-edge...'
 kubectl create -f scripts/k8s/ingress_rma.yaml
 echo 'Applying ingress rule for dh->search-edge...'
 kubectl create -f scripts/k8s/ingress_dh.yaml
+
+echo 'Adding fortio to dh and rma...'
+kubectl create -f scripts/k8s/fortio.yaml --namespace=rma
+kubectl create -f scripts/k8s/fortio.yaml --namespace=dh
 
 echo 'k8s deployment complete'
