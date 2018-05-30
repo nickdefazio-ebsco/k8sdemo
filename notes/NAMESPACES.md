@@ -15,6 +15,9 @@ Ingress can be applied on a per namespace basis, [example 1](scripts/k8s/ingress
 For clarity, and for proper application, route rules should specify the namespace as part of the destination. The route rule should also be applied within the namespace where the service resides(or default). [Example definition](title-middle/k8s/route/title-middle-route.yaml), and example application:
 `kubectl create -f routerule.yaml --namespace=ns1`
 
+Additionally, avoid using the `default` kubernetes namespace. Even if products/teams are separated by cluster, pick a namespace and use it. In theory this would make combining and rearranging clusters easier if that needs to happen.
+
+
 ## Pros
 * Allows opportunity for better organization of services
 * Self documenting, explicit use
