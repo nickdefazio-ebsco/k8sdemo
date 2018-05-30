@@ -10,7 +10,6 @@ At the time of writing this, the docs show use of v1alpha1, the examples use v1a
 ## General resiliency patterns with Istio
 [Docs](https://istio.io/docs/reference/config/istio.routing.v1alpha1.html#CircuitBreaker.SimpleCircuitBreakerPolicy)
 
-* TODO: Figure out how we can fine tune max connections, and requests. Is this a question of setting hard limits, or best practices for determining custom config? How does this affect auto scaling?
 * `httpConsecutiveErrors` should be tuned to a reasonable level. Default to 5 seems too low at scale.
 * `httpMaxEjectionPercent` should be set to 100 to allow _all_ hosts within the load balancer pool to be ejected if necessary.
 
@@ -18,5 +17,16 @@ At the time of writing this, the docs show use of v1alpha1, the examples use v1a
 
 ## Application design patterns
 
-### Hystrix vs Istio circuit breaking
-* TODO: There are some major differences in hystrix app level circuit breaking vs istio circuit breaking, specifically around granularity. Give a high level overview of these differences
+### Istio
+
+Rely on istio for most circuit breaker concerns. Istio(Envoy) can detect HTTP consecutive 5xx errors and eject hosts accordingly. This should be able to handle most applications needs for failing fast and not causing partial/full cascading failures. Additionally, most applications can likely implement fallback logic by way of standard exception/error handling. Note that this pattern does result in another hop to the envoy proxy, but due to it being a container to container network hop within the same pod, this should be negligible.
+
+As part of overall setup and configuration, keep [cluster panic](https://www.envoyproxy.io/docs/envoy/latest/configuration/cluster_manager/cluster_runtime#core) in mind.
+
+
+### Circuit Breaker Libraries (Hystrix, etc)
+
+Envoy's circuit breaking and circuit breaker libraries like Hystrix are not mutually exlusive - they can work alongside one another. If using Istio, you likely do not need both, aside from specialized concerns such as:
+* Thread pool management
+* Highly specific error handling/fallback logic
+* You want to use the Hystrix metrics/dashboard features(though Istio should provide something similar)
