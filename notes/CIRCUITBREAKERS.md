@@ -31,5 +31,7 @@ Envoy's circuit breaking and circuit breaker libraries like Hystrix are not mutu
 * Highly specific error handling/fallback logic
 * You want to use the Hystrix metrics/dashboard features(though Istio should provide something similar)
 
+In general, Hystrix can move from a standard part of app development to more of a specialized tool.
+
 ### Further Reading
 http://blog.christianposta.com/microservices/comparing-envoy-and-istio-circuit-breaking-with-netflix-hystrix/
