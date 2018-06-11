@@ -4,7 +4,7 @@
 At the time of writing this, Istio is currently on 0.8.0, which introduces the v1alpha3 networking API, and announces plans to deprecate the previous versions. This doc will cover circuit breaking within 0.8.0 or greater.
 
 ## Circuit Breaking in Istio(aka Outlier Detection)
-In Istio, circuit breaking is a function of the service mesh, labeled as "Outlier Detection". It uses [Envoy's outlier detection](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/outlier) functionality to achieve this, and can be configured in Istio's [destination rules](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#OutlierDetection). 
+In Istio, circuit breaking is a function of the service mesh, labeled as "Outlier Detection", and implemented as a traffic policy in the DestinationRule spec. It uses [Envoy's outlier detection](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/outlier) functionality to achieve this, and can be configured in Istio's [destination rules](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#OutlierDetection). 
 
 ### Outlier Detection Capabilities
 Envoy's outlier detection functions [somewhat differently than Hystrix](http://blog.christianposta.com/microservices/comparing-envoy-and-istio-circuit-breaking-with-netflix-hystrix/). In short, a good way to look at it is as a passive health check. It tracks failures(specifically as HTTP 500 errors) and timeouts, and can eject bad hosts from a load balancing pool when failures (outliers) are detected. This differs from Hystrix, which can provide fine grained application level circuit breakers and fallbacks. Envoy's outlier detection as implemented in Istio, at the time of writing this doc, is not capable of informing the application of specific errors, just returning HTTP 503.
@@ -132,6 +132,36 @@ cluster.outbound|8080||title-middle.rma.svc.cluster.local.outlier_detection.ejec
 ```
 
 
+## Connection Pools
+
+In addition to outlier detection, Istio also offers some capabilities regarding [connection pooling](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#ConnectionPoolSettings). Connection pooling allows services to define things like maximum connections, and timeouts at a service level. Though not really related to outlier detection, this functionality is comparable to things like timeout and maximum connections in [Hystrix](https://github.com/Netflix/Hystrix/wiki/Configuration#fallback). Note that this uses Envoy's [circuit breaker](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/circuit_breaking) functionality. It's goal is NOT to eject hosts from the load balancer pool, but instead to bulkhead services. [This article](http://blog.christianposta.com/microservices/comparing-envoy-and-istio-circuit-breaking-with-netflix-hystrix/) sums it up as:
+
+> Envoy “circuit breaking” is more like Hystrix bulkhead and “outlier detection” is more similar to Hystrix circuit-breaker
+
+### Tuning
+Istio allows tuning of several [HTTP](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#ConnectionPoolSettings.HTTPSettings) and [TCP](https://istio.io/docs/reference/config/istio.networking.v1alpha3/#ConnectionPoolSettings.TCPSettings)(shared with HTTP) settings:
+
+#### TCP
+
+**maxConnections** - Max concurrent connections for a given destination. This should be tuned based on how many hosts are present for a given service, and how many concurrent connections a single host within a service can handle. 
+
+**connectTimeout** - Timeout duration for a single connection in a given destination. This depends highly on the service, but using something like Hystrix as a measure, 1-10s is likely sufficient.
+
+
+
+#### HTTP
+
+**http1MaxPendingRequests** - Maximum number of concurrent pending HTTP 1 requests. Defaults to 1024, should be tuned based on throughput.
+
+**http2MaxRequests** - Maximum number of concurrent pending HTTP 2 requests. Defaults to 1024, should be tuned based on throughput.
+
+**maxRequestsPerConnection** - Max requests per connection. Can be tuned to 1 to disable [HTTP persistant connections](https://en.wikipedia.org/wiki/HTTP_persistent_connection).
+
+**maxRetries** - Max number of retries to the cluster. From the envoy docs:
+
+> The maximum number of retries that can be outstanding to all hosts in a cluster at any given time. In general we recommend aggressively circuit breaking retries so that retries for sporadic failures are allowed but the overall retry volume cannot explode and cause large scale cascading failure.
+
+
 
 ## General Application Design Patterns
 
@@ -150,3 +180,4 @@ In general, Hystrix can move from a standard part of app development to more of 
 
 ### Further Reading
 http://blog.christianposta.com/microservices/comparing-envoy-and-istio-circuit-breaking-with-netflix-hystrix/
+https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/circuit_breaking
