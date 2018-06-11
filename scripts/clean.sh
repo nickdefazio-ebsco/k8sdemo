@@ -8,7 +8,7 @@ kubectl delete deployments/fortio-deploy --namespace=rma
 kubectl delete deployments/fortio-deploy --namespace=dh
 kubectl delete deployments/search-edge --namespace=dh
 
-kubectl delete routerule --namespace=rma --all
-kubectl delete destinationpolicy --namespace=rma --all
+kubectl delete virtualservice --namespace=rma --all
+kubectl delete destinationrule --namespace=rma --all
 kubectl delete ingress rma-ingress --namespace=rma
 kubectl delete ingress dh-ingress --namespace=dh

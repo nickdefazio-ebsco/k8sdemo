@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: title-middle-destination
+spec:
+  host: title-middle
+  trafficPolicy:
+    loadBalancer:
+      simple: RANDOM
+    outlierDetection:
+      http:
+        consecutiveErrors: 5
+        interval: 30s
+        baseEjectionTime: 5m
+        maxEjectionPercent: 100
+  subsets:
+  - name: 0.1.0
+    labels:
+      version: 0.1.0
+  - name: 0.2.0
+    labels:
+      version: 0.2.0
