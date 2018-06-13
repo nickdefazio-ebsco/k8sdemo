@@ -51,4 +51,7 @@ echo 'Adding fortio to dh and rma...'
 kubectl create -f scripts/k8s/fortio.yaml --namespace=rma
 kubectl create -f scripts/k8s/fortio.yaml --namespace=dh
 
+echo 'Adding custom metric...'
+kubectl create -f scripts/k8s/metric.yaml
+
 echo 'k8s deployment complete'

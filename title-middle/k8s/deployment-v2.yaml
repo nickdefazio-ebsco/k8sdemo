@@ -9,6 +9,7 @@ spec:
       labels:
         app: title-middle
         version: 0.2.0
+        type: newrelease
     spec:
       containers:
       - name: title-middle

@@ -12,3 +12,4 @@ kubectl delete virtualservice --namespace=rma --all
 kubectl delete destinationrule --namespace=rma --all
 kubectl delete ingress rma-ingress --namespace=rma
 kubectl delete ingress dh-ingress --namespace=dh
+kubectl delete -f scripts/k8s/metric.yaml
