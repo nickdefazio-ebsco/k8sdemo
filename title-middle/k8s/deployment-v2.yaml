@@ -15,7 +15,7 @@ spec:
       - name: title-middle
         image: title-middle:0.2.0
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
         imagePullPolicy: IfNotPresent #For local dev, use local docker repo
         livenessProbe:
           httpGet:
@@ -27,7 +27,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
+            port: 8081
           initialDelaySeconds: 60
           periodSeconds: 30
           timeoutSeconds: 5
